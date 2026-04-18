@@ -13,9 +13,10 @@ from datasets import load_dataset
 import requests, json, pandas as pd, os, argparse, hashlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from prompt import SYSTEM_PROMPT, PROMPT_TEMPLATE
+from parser import parse_raw
 # ── CONFIG ────────────────────────────────────────────────
 GPTOSS_URL = "http://172.17.99.11:30000/v1/chat/completions"
-GPTOSS_KEY = "AVTXOTWZab9v8WExZMNcGXdCFPCmon4LQPMWP6iS32w2"
+GPTOSS_KEY = os.getenv("GPTOSS_API_KEY")
 GPTOSS_MODEL = "openai/gpt-oss-120b"
 
 OUTPUT_DIR = "generated_data"
@@ -23,7 +24,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 MADE_BY = "Khushi Garg & Ankit Saha"
 
-# ── HIGH-QUALITY PROMPT (RESTORED FULL VERSION) ───────────
+
 
 def normalize(conv):
     """Ensure all turns are {role, content} dicts not plain strings."""
@@ -64,22 +65,7 @@ def call_gptoss(question, answer):
     return data["choices"][0]["message"]["content"], data["usage"]["completion_tokens"]
 
 # ── PARSE OUTPUT ──────────────────────────────────────────
-def parse_raw(raw: str):
-    if not raw:
-        return None
-    # Strip common junk
-    text = raw.strip().replace("\n", " ")
 
-    # Extract the first complete JSON array (handles leading text)
-    match = re.search(r'\[\s*\{.*\}\s*\]', text, re.DOTALL)
-    if not match:
-        return None
-
-    try:
-        obj = json.loads(match.group(0))
-        return obj if isinstance(obj, list) else None
-    except json.JSONDecodeError:
-        return None
 
 # ── WORKER FUNCTION ───────────────────────────────────────
 def process_single(i, row, args, existing_ids):
