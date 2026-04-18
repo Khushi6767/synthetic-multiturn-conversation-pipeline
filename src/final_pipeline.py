@@ -24,34 +24,6 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 MADE_BY = "Khushi Garg & Ankit Saha"
 
 # ── HIGH-QUALITY PROMPT (RESTORED FULL VERSION) ───────────
-SYSTEM_PROMPT = (
-    "You are a helpful assistant. "
-    "Always wrap your reasoning inside <think> </think> tags "
-    "and your final answer inside <answer> </answer> tags."
-)
-
-PROMPT_TEMPLATE = """Convert the following Q&A into a natural multi-turn conversation with between 2 and 8 messages (always an even number, alternating user then assistant, starting with user).
-
-The user is curious and engaged. Their follow-up questions must:
-- React naturally to what the assistant just said (not just restate the original question)
-- Be based on BOTH the original question AND the assistant's previous response
-- Show they understood the answer and are building on it — asking why, what if, how does this generalise, real-world implications, edge cases, or deeper connections
-- Feel like a real person talking, not a robotic prompt
-
-Every assistant message MUST follow this exact format:
-<think>step by step reasoning here</think> <answer>complete sentence answer here</answer>
-
-STRICT RULES:
-- Between 2 and 8 messages total (even number only)
-- Only <think> and <answer> tags — no other tags
-- Complete sentences in every <answer>
-- No code fences, no preamble
-- Start with [ and end with ] — nothing before or after
-
-Question: {question}
-Answer: {answer}
-
-Return ONLY the JSON array."""
 
 def normalize(conv):
     """Ensure all turns are {role, content} dicts not plain strings."""
