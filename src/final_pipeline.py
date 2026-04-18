@@ -12,8 +12,10 @@ import re
 from datasets import load_dataset
 import requests, json, pandas as pd, os, argparse, hashlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from dotenv import load_dotenv
 from prompt import SYSTEM_PROMPT, PROMPT_TEMPLATE
 from parser import parse_raw
+load_dotenv()
 # ── CONFIG ────────────────────────────────────────────────
 GPTOSS_URL = "http://172.17.99.11:30000/v1/chat/completions"
 GPTOSS_KEY = os.getenv("GPTOSS_API_KEY")
