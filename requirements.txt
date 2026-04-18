@@ -1,0 +1,6 @@
+datasets
+pandas
+requests
+pyarrow
+tqdm
+python-dotenv
