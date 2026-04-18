@@ -12,7 +12,7 @@ import re
 from datasets import load_dataset
 import requests, json, pandas as pd, os, argparse, hashlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
-
+from prompt import SYSTEM_PROMPT, PROMPT_TEMPLATE
 # ── CONFIG ────────────────────────────────────────────────
 GPTOSS_URL = "http://172.17.99.11:30000/v1/chat/completions"
 GPTOSS_KEY = "AVTXOTWZab9v8WExZMNcGXdCFPCmon4LQPMWP6iS32w2"
